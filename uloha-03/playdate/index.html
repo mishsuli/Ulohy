@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Úloha 2
+
+	</title>
+	<link rel="stylesheet" href="./css/app.css">
+	<link rel="stylesheet" href="./css/header.css">
+	<link rel="stylesheet" href="./css/cards.css">
+	<link rel="stylesheet" href="./css/form.css">
+	<style>
+		.animacia {
+			animation: pohyb 1s;
+		}
+
+		@keyframes pohyb {
+			0% {left: -100%;}
+ 			100% {left: 0;}
+		}
+	</style>
+</head>
+
+<body>
+
+	<header>
+		<img src="./images/header-playdate-dev.png" alt="anyone can make games">
+	</header>
+
+	<main>
+		 
+		
+			<input type="text" name="nadpis" id="nadpis" placeholder="zadaj nadpis">
+			<textarea name="text" id="text" placeholder="zadaj text"></textarea>
+			<button id="pridat">Pridať kartu</button>
+
+			<section class="cards">
+			<ul>
+				
+			</ul>
+		</section>
+	</main>
+
+	<script>
+
+		// zadanie a) vytvor funkciu, ktora vytvori novu kartu s nadpisom a textom
+		
+		function novaKarta(nadpis,text){
+			let novaKarta = document.createElement("li");
+			novaKarta.classList.add("card"+Math.floor(Math.random() * 1000));
+			novaKarta.innerHTML = "<h3>" + nadpis + "</h3><p>" + text + "</p>";
+			//document.querySelector(".cards ul").appendChild(novaKarta);
+			document.querySelector(".cards ul").insertBefore(novaKarta, document.querySelector(".cards ul").firstChild);
+			
+			console.log("Nový \"card\" pridaný");
+		}		
+		novaKarta("Nový card","S textom");
+		
+		// zadanie b) uprav stranku tak aby sa nadpis a text kariet pridaval cez inputy
+		function pridajKartu(){
+			let nadpis = document.querySelector("#nadpis").value;
+			let text = document.querySelector("#text").value;
+			if(nadpis !== "" && text !== ""){
+				
+				novaKarta(nadpis,text);
+			}
+		}
+		
+		document.querySelector("#pridat").addEventListener("click", pridajKartu) || document.addEventListener("keypress", function(event){
+			if(event.key === "Enter"){
+				pridajKartu();
+			}
+		});
+		
+		// zadanie c) uprav funkciu tak, ze bude pracovat s polom objektov
+		
+		function pridajKartu(){
+			let nadpis = document.querySelector("#nadpis").value;
+			let text = document.querySelector("#text").value;
+			if(nadpis !== "" && text !== ""){
+				novaKarta(nadpis,text);
+				karty.push({nadpis: nadpis, text: text});
+				let pocitadlo = 0;
+				karty.forEach(karta => {
+					pocitadlo++;
+				});
+				console.log("Počet objektov v poli: " + pocitadlo);
+				
+			}
+		}
+		
+		let karty = [
+			{
+				nadpis: "Nacitane z pola objektov 1",
+				text: "Our full development environment, available for Mac, PC, and Linux. Includes Lua and C APIs, as well as a Simulator for local development, with profiling and more."
+			},
+			{
+				nadpis: "Nacitane z pola objektov 2",
+				text: "Reference documentation for programming Playdate games. Covers both Lua and C programming."
+			},
+			{
+				nadpis: "Nacitane z pola objektov 3",
+				text: "Bitmap font editor for Playdate fonts—draw your own characters, import desktop fonts, kern and preview them."
+			}
+		];
+
+		function nacitajKarty(){
+			karty.forEach(karta => {
+				novaKarta(karta.nadpis,karta.text);
+			});
+		}
+		nacitajKarty();
+
+		// zadanie d) načítaj toto pole objektov zo súboru data.json
+
+		fetch("./data.json")
+			.then(response => response.json())
+			.then(data => {
+				karty = data;
+				nacitajKarty();
+			});
+		
+		// zadanie e) pridaj animáciu, ktorá sa spustí pri pridaní karty
+
+		function pridajKartu(){
+			let nadpis = document.querySelector("#nadpis").value;
+			let text = document.querySelector("#text").value;
+			if(nadpis !== "" && text !== ""){
+				novaKarta(nadpis,text);
+				karty.push({nadpis: nadpis, text: text});
+				let pocitadlo = 0;
+				karty.forEach(karta => {
+					pocitadlo++;
+				});
+				document.querySelector("ul").firstChild.classList.add("animacia"); 
+				document.querySelector("ul").firstChild.addEventListener("animationend", function(){
+					document.querySelector("ul").firstChild.classList.remove("animacia");
+				});
+				console.log("Počet objektov v poli: " + pocitadlo);
+				
+			}
+		}
+		
+
+
+	</script>
+
+</body>
+
+</html>

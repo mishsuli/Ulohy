@@ -1,0 +1,14 @@
+[
+    {
+        "nadpis":"Nacitane z data.json suboru 1",
+        "text":"Our full development environment, available for Mac, PC, and Linux. Includes Lua and C APIs, as well as a Simulator for local development, with profiling and more."
+    },
+    {
+        "nadpis":"Nacitane z data.json suboru 2",
+        "text":"Reference documentation for programming Playdate games. Covers both Lua and C programming."
+    },
+    {
+        "nadpis":"Nacitane z data.json suboru 3",
+        "text":"Bitmap font editor for Playdate fonts—draw your own characters, import desktop fonts, kern and preview them."
+    }
+]
